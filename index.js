@@ -1,7 +1,7 @@
 //----------JQuery-----------------//
 $(function(){
     let currentSlide = 0;
-    const slides = $('img[data-slide]');
+    const slides = $('.slide[data-slide]');
     const totalSlides = slides.length;
     
     // Initialize the slider
