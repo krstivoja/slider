@@ -13,6 +13,7 @@ body{
     position: absolute;
     text-align: center;
     transition: all 500ms ease;
+    background-color: white;
   }
   
   .slide img {
