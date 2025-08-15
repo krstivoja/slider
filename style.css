@@ -14,12 +14,15 @@ body {
     justify-content: center;
 }
 
+.section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .my-slider {
-    width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     border: 5px solid lightblue;
-    display: flex;
+    overflow: hidden; /* Ensure overflow is hidden */
 }
 
 img {
@@ -29,6 +32,16 @@ img {
 }
 
 .slide {
-    width: 100%;
-    border:5px solid blue;
+    /* Remove width: 100% - let tiny-slider control the width */
+    border: 5px solid blue;
+    flex-shrink: 0; /* Prevent slides from shrinking */
+}
+
+/* Ensure tiny-slider container has proper overflow handling */
+.tns-outer {
+    overflow: hidden;
+}
+
+.tns-inner {
+    overflow: hidden;
 }
