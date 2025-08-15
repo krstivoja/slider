@@ -28,6 +28,7 @@ body{
     border-radius: clamp(8px, 1.5vw, 10px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     width: clamp(140px, 20vw, 200px);
+    will-change: transform, opacity;
   }
   
   .slide img {
@@ -66,22 +67,45 @@ body{
   .slide[data-slide].left-2 {
     z-index: 8;
     opacity: 0.4;
+    cursor: pointer;
   }
   
   .slide[data-slide].left-1 {
     z-index: 9;
     opacity: 0.7;
+    cursor: pointer;
   }
   
   /* Right slides */
   .slide[data-slide].right-1 {
     z-index: 9;
     opacity: 0.7;
+    cursor: pointer;
   }
   
   .slide[data-slide].right-2 {
     z-index: 8;
     opacity: 0.4;
+    cursor: pointer;
+  }
+  
+  /* Hover effects for clickable slides */
+  .slide[data-slide].left-2:hover,
+  .slide[data-slide].left-1:hover,
+  .slide[data-slide].right-1:hover,
+  .slide[data-slide].right-2:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Active slide should not show pointer cursor */
+  .slide[data-slide].active {
+    cursor: default;
+  }
+  
+  /* Prevent clicks during transitions */
+  .slide.transitioning {
+    pointer-events: none;
   }
   
   .prev,.next{

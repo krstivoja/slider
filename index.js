@@ -112,6 +112,72 @@ $(function(){
         prevSlide();
     });
     
+    // Add click functionality to all slides
+    slides.click(function(e) {
+        // Prevent event bubbling issues
+        e.stopPropagation();
+        
+        const clickedIndex = $(this).data('slide');
+        const clickedClass = $(this).attr('class');
+        
+        // Only allow clicking on visible slides (not the active one)
+        if (clickedClass.includes('left-1') || clickedClass.includes('left-2') || 
+            clickedClass.includes('right-1') || clickedClass.includes('right-2')) {
+            currentSlide = clickedIndex;
+            updateSlidePositions();
+        }
+    });
+    
+    // Also add click handlers to images and names to ensure they work
+    slides.find('img, .name').click(function(e) {
+        e.stopPropagation();
+        const parentSlide = $(this).closest('.slide');
+        const clickedIndex = parentSlide.data('slide');
+        const clickedClass = parentSlide.attr('class');
+        
+        // Only allow clicking on visible slides (not the active one)
+        if (clickedClass.includes('left-1') || clickedClass.includes('left-2') || 
+            clickedClass.includes('right-1') || clickedClass.includes('right-2')) {
+            currentSlide = clickedIndex;
+            updateSlidePositions();
+        }
+    });
+    
+    // Add a more robust click handler that checks current state
+    $(document).on('click', '.slide', function(e) {
+        e.stopPropagation();
+        
+        // Get the clicked slide and its current state
+        const $clickedSlide = $(this);
+        const clickedIndex = $clickedSlide.data('slide');
+        
+        // Check if this slide is currently in a visible position
+        const isLeft1 = $clickedSlide.hasClass('left-1');
+        const isLeft2 = $clickedSlide.hasClass('left-2');
+        const isRight1 = $clickedSlide.hasClass('right-1');
+        const isRight2 = $clickedSlide.hasClass('right-2');
+        const isActive = $clickedSlide.hasClass('active');
+        
+        // Only allow clicking on visible side slides
+        if ((isLeft1 || isLeft2 || isRight1 || isRight2) && !isActive) {
+            // Prevent rapid clicking during transitions
+            if ($clickedSlide.hasClass('transitioning')) {
+                return;
+            }
+            
+            // Mark as transitioning to prevent multiple clicks
+            $clickedSlide.addClass('transitioning');
+            
+            currentSlide = clickedIndex;
+            updateSlidePositions();
+            
+            // Remove transitioning class after animation completes
+            setTimeout(() => {
+                $clickedSlide.removeClass('transitioning');
+            }, 500); // Match the CSS transition duration
+        }
+    });
+    
     // Handle window resize
     $(window).on('resize', function() {
         // Debounce resize events
