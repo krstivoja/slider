@@ -49,10 +49,11 @@ $(function(){
     
     // Update slide positions based on current slide and actual dimensions
     function updateSlidePositions() {
-        slides.removeClass('active left-1 left-2 right-1 right-2');
+        // First, set all slides to opacity 0 and remove all classes
+        slides.removeClass('active left-1 left-2 right-1 right-2').css('opacity', 0);
         
         // Set active (center) slide
-        slides.eq(currentSlide).addClass('active');
+        slides.eq(currentSlide).addClass('active').css('opacity', 1);
         
         // Calculate positions based on actual card width
         const left1Offset = -(cardWidth * 0.3);
@@ -62,17 +63,29 @@ $(function(){
         
         // Set left slides
         const left1Index = (currentSlide - 1 + totalSlides) % totalSlides;
-        slides.eq(left1Index).addClass('left-1').css('transform', `translateX(${left1Offset}px) scale(0.85)`);
+        slides.eq(left1Index).addClass('left-1').css({
+            'transform': `translateX(${left1Offset}px) scale(0.85)`,
+            'opacity': 0.7
+        });
         
         const left2Index = (currentSlide - 2 + totalSlides) % totalSlides;
-        slides.eq(left2Index).addClass('left-2').css('transform', `translateX(${left2Offset}px) scale(0.7)`);
+        slides.eq(left2Index).addClass('left-2').css({
+            'transform': `translateX(${left2Offset}px) scale(0.7)`,
+            'opacity': 0.4
+        });
         
         // Set right slides
         const right1Index = (currentSlide + 1) % totalSlides;
-        slides.eq(right1Index).addClass('right-1').css('transform', `translateX(${right1Offset}px) scale(0.85)`);
+        slides.eq(right1Index).addClass('right-1').css({
+            'transform': `translateX(${right1Offset}px) scale(0.85)`,
+            'opacity': 0.7
+        });
         
         const right2Index = (currentSlide + 2) % totalSlides;
-        slides.eq(right2Index).addClass('right-2').css('transform', `translateX(${right2Offset}px) scale(0.7)`);
+        slides.eq(right2Index).addClass('right-2').css({
+            'transform': `translateX(${right2Offset}px) scale(0.7)`,
+            'opacity': 0.4
+        });
         
         // Set active slide transform
         slides.eq(currentSlide).css('transform', 'translateX(0) scale(1)');
