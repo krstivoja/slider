@@ -1,6 +1,6 @@
 // Slider configuration
 const slider = tns({
-    container: '.my-slider',
+    container: '.team-slider',
     items: 5,
     slideBy: 1,
     autoplay: true,

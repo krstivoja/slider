@@ -14,23 +14,25 @@ body {
     justify-content: center;
 }
 
+img {
+    max-width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}
+
 .section {
     max-width: 600px;
     margin: 0 auto;
 }
 
-.my-slider {
+.team-slider {
     margin: 0 auto;
     border: 5px solid lightblue;
     overflow: visible;
     padding: 20px 0;
 }
 
-img {
-    max-width: 100%;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-}
+
 
 .slide {
     border: 5px solid blue;
@@ -60,7 +62,7 @@ img {
     border-color: purple !important;
 }
 
-.my-slider .side-item {
+.team-slider .side-item {
     transform: scale(0.9) !important;
     z-index: 4 !important;
     border-color: orange !important;
