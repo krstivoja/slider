@@ -1,4 +1,5 @@
-var slider = tns({
+// Slider configuration
+const slider = tns({
     container: '.my-slider',
     items: 5,
     slideBy: 1,
@@ -19,74 +20,56 @@ var slider = tns({
     rewind: false
 });
 
-// Add data attributes to slides for better targeting
-function addDataAttributes() {
-    const slides = document.querySelectorAll('.tns-item');
-    slides.forEach((slide, index) => {
+// Utility functions
+const addDataAttributes = () => {
+    document.querySelectorAll('.tns-item').forEach((slide, index) => {
         slide.setAttribute('data-index', index);
     });
-}
+};
 
-// Function to identify and mark the middle item and side items
-function markMiddleAndSideItems() {
+const markItems = () => {
     // Remove previous classes
     document.querySelectorAll('.tns-item').forEach(item => {
         item.classList.remove('middle-item', 'side-item');
     });
     
-    // Get current slide info from tiny-slider
-    const info = slider.getInfo();
-    const currentIndex = info.index;
-    
-    // Calculate which items should be marked
-    // With items: 5, the middle item is at current index + 2
+    // Get current slide info and calculate positions
+    const { index: currentIndex } = slider.getInfo();
     const middleIndex = currentIndex + 2;
-    const leftSideIndex = currentIndex + 1;  // Left of middle
-    const rightSideIndex = currentIndex + 3; // Right of middle
+    const leftSideIndex = currentIndex + 1;
+    const rightSideIndex = currentIndex + 3;
     
-    // Mark the middle item
-    const middleItem = document.querySelector(`[data-index="${middleIndex}"]`);
-    if (middleItem) {
-        middleItem.classList.add('middle-item');
-        console.log('✅ Middle item marked:', middleItem, 'at index:', middleIndex);
-    }
+    // Mark items with appropriate classes
+    const itemsToMark = [
+        { index: middleIndex, class: 'middle-item' },
+        { index: leftSideIndex, class: 'side-item' },
+        { index: rightSideIndex, class: 'side-item' }
+    ];
     
-    // Mark the left side item
-    const leftSideItem = document.querySelector(`[data-index="${leftSideIndex}"]`);
-    if (leftSideItem) {
-        leftSideItem.classList.add('side-item');
-        console.log('✅ Left side item marked:', leftSideItem, 'at index:', leftSideIndex);
-    }
+    itemsToMark.forEach(({ index, class: className }) => {
+        const item = document.querySelector(`[data-index="${index}"]`);
+        if (item) {
+            item.classList.add(className);
+        }
+    });
     
-    // Mark the right side item
-    const rightSideItem = document.querySelector(`[data-index="${rightSideIndex}"]`);
-    if (rightSideItem) {
-        rightSideItem.classList.add('side-item');
-        console.log('✅ Right side item marked:', rightSideItem, 'at index:', rightSideIndex);
-    }
+    console.log(`Items marked - Current: ${currentIndex}, Middle: ${middleIndex}, Sides: ${leftSideIndex}, ${rightSideIndex}`);
+};
+
+// Initialize and set up event listeners
+const init = () => {
+    setTimeout(() => {
+        addDataAttributes();
+        markItems();
+    }, 100);
     
-    console.log('Current slider index:', currentIndex);
-}
+    // Event listeners for slide changes
+    slider.events.on('transitionEnd', markItems);
+    slider.events.on('transitionStart', markItems);
+};
 
-// Call after slider is initialized
-setTimeout(() => {
-    addDataAttributes();
-    markMiddleAndSideItems();
-}, 100);
+// Initialize slider
+init();
 
-// Mark items on slide change
-slider.events.on('transitionEnd', function() {
-    console.log('🔄 Transition ended, marking items...');
-    markMiddleAndSideItems();
-});
-
-// Also mark on slide change start
-slider.events.on('transitionStart', function() {
-    console.log('🔄 Transition started, marking items...');
-    markMiddleAndSideItems();
-});
-
-// Debug: Log slider info
+// Debug info
 console.log('Slider initialized:', slider);
-console.log('Container:', document.querySelector('.my-slider'));
-console.log('Items:', document.querySelectorAll('.tns-item'));
