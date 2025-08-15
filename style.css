@@ -133,4 +133,54 @@ body{
     margin: 1rem auto;
   }
   
+  /* Accordion Styles */
+  .accordion-item {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  .accordion-item:hover {
+    background: #f8f9fa;
+    border-color: #6bd6c6;
+  }
+  
+  .accordion-item.active {
+    background: #6bd6c6;
+    border-color: #6bd6c6;
+    color: white;
+  }
+  
+  .accordion-header {
+    padding: 15px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 20px;
+  }
+  
+  .accordion-content.active {
+    padding: 0 20px 20px 20px;
+  }
+  
+  /* Accordion toggle indicator */
+  .accordion-toggle {
+    transition: transform 0.3s ease;
+  }
+  
+  .accordion-item.active .accordion-toggle {
+    transform: rotate(180deg);
+  }
+  
   

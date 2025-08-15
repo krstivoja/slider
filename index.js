@@ -42,11 +42,44 @@ document.addEventListener('DOMContentLoaded', () => {
     function nextSlide() {
         currentSlide = (currentSlide + 1) % totalSlides;
         updateSlidePositions();
+        updateAccordionState();
     }
 
     function prevSlide() {
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         updateSlidePositions();
+        updateAccordionState();
+    }
+
+    // Function to go to a specific slide
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        updateSlidePositions();
+        updateAccordionState();
+    }
+
+    // Function to update accordion state based on current slide
+    function updateAccordionState() {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach((item, index) => {
+            if (index === currentSlide) {
+                item.classList.add('active');
+                // Open the accordion content
+                const content = item.querySelector('.accordion-content');
+                if (content) {
+                    content.style.display = 'block';
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            } else {
+                item.classList.remove('active');
+                // Close the accordion content
+                const content = item.querySelector('.accordion-content');
+                if (content) {
+                    content.style.display = 'none';
+                    content.style.maxHeight = '0px';
+                }
+            }
+        });
     }
 
     // Event listeners
@@ -58,7 +91,46 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!slide.classList.contains('active')) {
                 currentSlide = slides.indexOf(slide);
                 updateSlidePositions();
+                updateAccordionState();
             }
+        });
+    });
+
+    // Accordion click handlers
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            // Close all other accordion items
+            accordionItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    const content = otherItem.querySelector('.accordion-content');
+                    if (content) {
+                        content.style.display = 'none';
+                        content.style.maxHeight = '0px';
+                    }
+                }
+            });
+
+            // Toggle current accordion item
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                const content = item.querySelector('.accordion-content');
+                if (content) {
+                    content.style.display = 'none';
+                    content.style.maxHeight = '0px';
+                }
+            } else {
+                item.classList.add('active');
+                const content = item.querySelector('.accordion-content');
+                if (content) {
+                    content.style.display = 'block';
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            }
+
+            // Activate corresponding slide in slider
+            goToSlide(index);
         });
     });
 
