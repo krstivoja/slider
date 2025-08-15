@@ -22,7 +22,8 @@ body {
 .my-slider {
     margin: 0 auto;
     border: 5px solid lightblue;
-    overflow: hidden; /* Ensure overflow is hidden */
+    overflow: visible; /* Allow cards to overlap outside container */
+    padding: 20px 0; /* Add padding to show overlapping cards */
 }
 
 img {
@@ -32,16 +33,83 @@ img {
 }
 
 .slide {
-    /* Remove width: 100% - let tiny-slider control the width */
     border: 5px solid blue;
-    flex-shrink: 0; /* Prevent slides from shrinking */
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    transform-origin: center;
 }
 
 /* Ensure tiny-slider container has proper overflow handling */
 .tns-outer {
-    overflow: hidden;
+    overflow: visible; /* Allow overflow for overlapping effect */
 }
 
 .tns-inner {
-    overflow: hidden;
+    overflow: visible; /* Allow overflow for overlapping effect */
+}
+
+/* Create overlapping effect for carousel items */
+.tns-item {
+    transition: all 0.3s ease;
+    transform-origin: center;
+    position: relative;
+}
+
+/* Middle item (center of 5 visible) - largest and most prominent */
+.tns-item.middle-item {
+    transform: scale(1.2) translateZ(0);
+    z-index: 5;
+    opacity: 1;
+    border-color: purple !important; /* Highlight middle slide */
+}
+
+/* Side items (left and right of middle) - medium size */
+.tns-item.side-item {
+    transform: scale(0.9);
+    z-index: 4;
+    opacity: 0.8;
+    border-color: orange !important; /* Highlight side items */
+}
+
+/* Active slides (all 5 visible) - medium size */
+.tns-item.tns-slide-active {
+    transform: scale(0.8);
+    z-index: 3;
+    opacity: 0.8;
+    border-color: blue;
+}
+
+/* Non-active slides - smaller scale and positioned */
+.tns-item:not(.tns-slide-active) {
+    transform: scale(0.6);
+    opacity: 0.4;
+    z-index: 1;
+}
+
+/* Position non-active slides to create overlapping effect */
+.tns-item:not(.tns-slide-active) {
+    transform: scale(0.6) translateX(20px);
+}
+
+/* Alternative: use data attributes for precise positioning */
+.tns-item[data-index] {
+    transition: all 0.3s ease;
+}
+
+/* Force only one middle item */
+.tns-item.middle-item ~ .tns-item.middle-item {
+    transform: scale(0.8) !important;
+    opacity: 0.8 !important;
+    border-color: blue !important;
+    z-index: 3 !important;
+}
+
+.middle-item {
+    transform: scale(2) !important;
+    z-index: 5 !important;
+}
+
+.my-slider .side-item {
+    transform: scale(1.5) !important;
+    z-index: 4 !important;
 }
