@@ -1,40 +1,58 @@
 //----------JQuery-----------------//
 $(function(){
-    flag=0;
+    let currentSlide = 0;
+    const slides = $('img[data-slide]');
+    const totalSlides = slides.length;
+    
+    // Initialize the slider
+    function initSlider() {
+        // Set initial positions
+        updateSlidePositions();
+    }
+    
+    // Update slide positions based on current slide
+    function updateSlidePositions() {
+        slides.removeClass('active left-1 left-2 right-1 right-2');
+        
+        // Set active (center) slide
+        slides.eq(currentSlide).addClass('active');
+        
+        // Set left slides
+        const left1Index = (currentSlide - 1 + totalSlides) % totalSlides;
+        slides.eq(left1Index).addClass('left-1');
+        
+        const left2Index = (currentSlide - 2 + totalSlides) % totalSlides;
+        slides.eq(left2Index).addClass('left-2');
+        
+        // Set right slides
+        const right1Index = (currentSlide + 1) % totalSlides;
+        slides.eq(right1Index).addClass('right-1');
+        
+        const right2Index = (currentSlide + 2) % totalSlides;
+        slides.eq(right2Index).addClass('right-2');
+    }
+    
+    // Go to next slide
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlidePositions();
+    }
+    
+    // Go to previous slide
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlidePositions();
+    }
+    
+    // Event handlers
     $('.next').click(function(){
-      if(flag == 0){
-        $('.c1').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c2').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c3').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 1;
-      } else if(flag == 1){
-        $('.c3').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c1').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c2').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 2;
-      }else if(flag == 2){
-        $('.c2').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c3').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c1').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 0;
-      }
+        nextSlide();
     });
+    
     $('.prev').click(function(){
-      if(flag == 0){
-        $('.c3').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c1').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c2').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 1;
-      } else if(flag == 1){
-        $('.c1').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c2').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c3').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 2;
-      }else if(flag == 2){
-        $('.c2').css({'transform':'translateX(-100px) scale(1)','z-index':'9'});
-        $('.c3').css({'transform':'translateX(100px) scale(1)','z-index':'9'});
-        $('.c1').css({'transform':'translateX(0) scale(1.5)','z-index':'99'});
-        flag = 0;
-      }
+        prevSlide();
     });
-  });
+    
+    // Initialize the slider
+    initSlider();
+});

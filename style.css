@@ -16,16 +16,47 @@ body{
     border:2px solid gray;
     transition:all 500ms ease;
   }
-  .c1{
+  
+  /* Default state for all slides */
+  img[data-slide] {
+    transform:translateX(0) scale(0.8);
+    z-index:9;
+    opacity: 0.6;
+  }
+  
+  /* Active slide (center) */
+  img[data-slide].active {
     transform:translateX(0) scale(1.5);
     z-index:99;
+    opacity: 1;
   }
-  .c2{
-    transform:translateX(-100px) scale(1);
+  
+  /* Left slides */
+  img[data-slide].left-2 {
+    transform:translateX(-200px) scale(0.7);
+    z-index:8;
+    opacity: 0.4;
   }
-  .c3{
-    transform:translateX(100px) scale(1);
+  
+  img[data-slide].left-1 {
+    transform:translateX(-100px) scale(0.9);
+    z-index:9;
+    opacity: 0.7;
   }
+  
+  /* Right slides */
+  img[data-slide].right-1 {
+    transform:translateX(100px) scale(0.9);
+    z-index:9;
+    opacity: 0.7;
+  }
+  
+  img[data-slide].right-2 {
+    transform:translateX(200px) scale(0.7);
+    z-index:8;
+    opacity: 0.4;
+  }
+  
   .prev,.next{
     position: absolute;
     color:gray;
