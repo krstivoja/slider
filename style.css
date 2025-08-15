@@ -3,10 +3,21 @@ body{
     padding: 0;
     background:#6bd6c6;
   }
+  
+  .section.slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
   .container {
-    position: absolute;
-    top:35%;
-    left:45%;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .slide {
@@ -14,6 +25,10 @@ body{
     text-align: center;
     transition: all 500ms ease;
     background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 200px;
   }
   
   .slide img {
@@ -22,6 +37,7 @@ body{
     border:2px solid gray;
     display: block;
     margin: 0 auto;
+    border-radius: 8px;
   }
   
   .slide .name {
@@ -44,39 +60,38 @@ body{
   
   /* Active slide (center) */
   .slide[data-slide].active {
-    transform:translateX(0) scale(1.5);
+    transform:translateX(0) scale(1);
     z-index:99;
     opacity: 1;
   }
   
   /* Left slides */
   .slide[data-slide].left-2 {
-    transform:translateX(-200px) scale(0.7);
+    transform:translateX(-100%) scale(0.7);
     z-index:8;
     opacity: 0.4;
   }
   
   .slide[data-slide].left-1 {
-    transform:translateX(-100px) scale(0.9);
+    transform:translateX(-60%) scale(0.85);
     z-index:9;
     opacity: 0.7;
   }
   
   /* Right slides */
   .slide[data-slide].right-1 {
-    transform:translateX(100px) scale(0.9);
+    transform:translateX(60%) scale(0.85);
     z-index:9;
     opacity: 0.7;
   }
   
   .slide[data-slide].right-2 {
-    transform:translateX(200px) scale(0.7);
+    transform:translateX(100%) scale(0.7);
     z-index:8;
     opacity: 0.4;
   }
   
   .prev,.next{
-    position: absolute;
     color:gray;
     border:2px solid gray;
     width:100px;
@@ -85,10 +100,25 @@ body{
     text-align:center;
     cursor:pointer;
     top:50%;
+    transform: translateY(-50%);
+    background: white;
+    border-radius: 5px;
     &:hover{
-      background:darken(#6bd6c6,5%);
+      background: #f0f0f0;
+      color: #333;
     }
   }
   .prev{left:20%;}
   .next{right:20%}
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
   
